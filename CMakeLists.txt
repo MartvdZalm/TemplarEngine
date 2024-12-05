@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.0.0)
+project(TemplarEngine VERSION 1.0.0)
+
+find_package(OpenGL REQUIRED)
+find_package(glfw3 REQUIRED)
+
+add_executable(TemplarEngine 
+	src/config.h 
+	src/main.cpp 
+	src/glad.c
+)
+
+target_include_directories(TemplarEngine PRIVATE dependencies)
+
+target_link_libraries(TemplarEngine glfw OpenGL::GL)
