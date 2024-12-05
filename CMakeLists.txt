@@ -9,8 +9,16 @@ add_executable(TemplarEngine
 	src/config.h 
 	src/main.cpp 
 	src/glad.c
+	src/triangle_mesh.cpp
+	src/triangle_mesh.h
 )
 
-target_include_directories(TemplarEngine PRIVATE dependencies)
+target_include_directories(TemplarEngine
+	PRIVATE
+	dependencies
+)
 
-target_link_libraries(TemplarEngine glfw OpenGL::GL)
+target_link_libraries(TemplarEngine
+	glfw
+	OpenGL::GL
+)
