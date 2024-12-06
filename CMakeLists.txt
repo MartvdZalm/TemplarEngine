@@ -13,6 +13,7 @@ add_executable(TemplarEngine
 	src/triangle_mesh.cpp
 	src/triangle_mesh.h
 	src/material.cpp
+	src/linear_algebra.cpp
 )
 
 target_include_directories(TemplarEngine

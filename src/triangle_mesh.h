@@ -1,12 +1,12 @@
 #include "config.h"
 
-class TriangleMesh {
+class TriangleMesh
+{
 public:
-TriangleMesh();
-void draw();
-~TriangleMesh();
+	TriangleMesh();
+	~TriangleMesh();
+	void draw();
 
 private:
-unsigned int EBO, VAO, element_count;
-std::vector<unsigned int> VBOs;
+	unsigned int EBO, VBO, VAO, element_count;
 };
