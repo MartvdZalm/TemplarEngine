@@ -9,6 +9,8 @@ find_package(GLEW REQUIRED)
 add_executable(TemplarEngine 
 	src/config.h
 	src/main.cpp
+	src/linear_algebra.cpp
+	src/triangle_mesh.cpp
 )
 
 target_include_directories(TemplarEngine

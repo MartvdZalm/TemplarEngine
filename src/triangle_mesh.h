@@ -1,18 +1,18 @@
-#include "config.h"
+#ifndef TRIANGLE_MESH_H
+#define TRIANGLE_MESH_H
 
-#ifndef TRIANGLE_MESH
-#define TRIANGLE_MESH
+#include <GL/glew.h>
+#include <glm/glm.hpp>
 
-class TriangleMesh
-{
+class TriangleMesh {
 public:
-	TriangleMesh();
-	~TriangleMesh();
-	void draw();
+    TriangleMesh();
+    ~TriangleMesh();
+    void draw();
 
 private:
-	GLuint vertexArrayID;
-	GLuint vertexBuffer;
+    GLuint vertexArrayID;
+    GLuint vertexBuffer;
 };
 
-#endif
+#endif // TRIANGLE_MESH_H

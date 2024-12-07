@@ -1,5 +1,6 @@
 #include "config.h"
-#include "triangle_mesh.cpp"
+#include "triangle_mesh.h"
+#include "linear_algebra.h"
 
 
 GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path)
@@ -126,16 +127,25 @@ int main()
 	TriangleMesh* triangle = new TriangleMesh();
 	GLuint programID = loadShaders("../src/shaders/vertex.glsl", "../src/shaders/fragment.glsl");
 
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-	do {
+	glUseProgram(programID);
+
+	// Define position
+    glm::vec3 quad_position = {0.1f, -0.4f, 0.0f};
+    glm::mat4 model = createTranslationTransform(quad_position);
+    unsigned int model_location = glGetUniformLocation(programID, "model");
+    glUniformMatrix4fv(model_location, 1, GL_FALSE, glm::value_ptr(model));
+
+
+	while (glfwWindowShouldClose(window) == 0) {
 		glfwPollEvents();
+		
 		glClear(GL_COLOR_BUFFER_BIT);
 		glUseProgram(programID);
 
 		triangle->draw();
 
 		glfwSwapBuffers(window);
-	} while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0);
+	}
 
 	return 0;
 }
