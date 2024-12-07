@@ -4,16 +4,11 @@ cmake_policy(SET CMP0072 NEW)
 
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
+find_package(GLEW REQUIRED)
 
 add_executable(TemplarEngine 
 	src/config.h
-	src/config.cpp
 	src/main.cpp
-	src/glad.c
-	src/triangle_mesh.cpp
-	src/triangle_mesh.h
-	src/material.cpp
-	src/linear_algebra.cpp
 )
 
 target_include_directories(TemplarEngine
@@ -24,4 +19,5 @@ target_include_directories(TemplarEngine
 target_link_libraries(TemplarEngine
 	glfw
 	OpenGL::GL
+	GLEW::GLEW
 )
