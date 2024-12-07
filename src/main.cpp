@@ -1,4 +1,5 @@
 #include "config.h"
+#include "triangle_mesh.cpp"
 
 
 GLuint loadShaders(const char* vertex_file_path, const char* fragment_file_path)
@@ -115,66 +116,26 @@ int main()
 	}
 
 	glfwMakeContextCurrent(window);
+	glClearColor(0.25f, 0.5f, 0.75f, 1.0f);
 	glewExperimental = true; // Needed in core profile
 	if (glewInit() != GLEW_OK) {
 		fprintf(stderr, "Failed to initialize GLEW.\n");
 		return -1;
 	}
-
-	glClearColor(0.25f, 0.5f, 0.75f, 1.0f);
 	
-	GLuint VertexArrayID;
-	glGenVertexArrays(1, &VertexArrayID);
-	glBindVertexArray(VertexArrayID);
-
-	// An array of 3 vectors which represents 3 vertices.
-	static const GLfloat g_vertex_buffer_data[] = {
-		-1.0f, -1.0f, 0.0f,
-		 1.0f, -1.0f, 0.0f,
-		 0.0f,  1.0f, 0.0f,
-	};
-
-	// This will identify our vertex buffer.
-	GLuint vertexbuffer;
-	// Generate 1 buffer, put the resulting identifier in vertexbuffer.
-	glGenBuffers(1, &vertexbuffer);
-	// The following commands will talk about our 'vertexbuffer' buffer.
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	// Give our vertices to OpenGL.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-
-
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-
+	TriangleMesh* triangle = new TriangleMesh();
 	GLuint programID = loadShaders("../src/shaders/vertex.glsl", "../src/shaders/fragment.glsl");
 
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 	do {
 		glfwPollEvents();
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-		glVertexAttribPointer(
-			0, // Attribute 0. No particular reason for 0, but must match the layout in the shader.
-			3, // Size
-			GL_FLOAT, // Type
-			GL_FALSE, // Normalized?
-			0, // Stride
-			(void*)0 // Array buffer offset
-		);
-
-		// Use our shader
 		glUseProgram(programID);
 
-		// Draw triangle
-		glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 traingle
-		glDisableVertexAttribArray(0);
+		triangle->draw();
 
-
-		// Swap buffers
 		glfwSwapBuffers(window);
 	} while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(window) == 0);
-
 
 	return 0;
 }
